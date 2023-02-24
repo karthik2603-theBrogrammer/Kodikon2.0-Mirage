@@ -1,14 +1,11 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import SignUpForm from './Signup';
+import Hero from './components/Hero';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <div className='App'>
-      <SignUpForm />
+      <Hero />
     </div>
   );
 }

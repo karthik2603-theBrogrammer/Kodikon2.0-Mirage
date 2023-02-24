@@ -1,70 +1,140 @@
-:root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
-  margin: 0;
+  overflow-x: hidden;
+}
+#typewriter {
+  margin-top: -35px;
+  margin-left: -69px;
+}
+
+@media screen and (max-width: 800px) {
+  #typewriter {
+    width: 100vw;
+    height: 100vw;
+    margin-left: -35px;
+  }
+}
+@media screen and (max-width: 400px) {
+  #typewriter {
+    width: 100vw;
+    margin-left: -30px;
+  }
+}
+.heading_container {
+  color: #c8cea5;
+  text-shadow: 2px 0px 5px #ffffff91;
+}
+.fly-in {
+  --delay: 0.05s;
+}
+
+ul {
+  list-style: none;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-75%, -50%);
+}
+.black-bg {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: auto;
+  background-color: #121212;
+}
+.fly-in li {
+  font-size: 4rem;
+  font-family: 'Orbitron', sans-serif;
+  /*   font-family: "Source Code Pro", monospace; */
+  transition: all 2s ease;
+}
+.reveal {
+  font-size: 2rem;
+  font-family: 'Orbitron', sans-serif;
+  opacity: 0;
+  animation: 0.3s ease 3s fadein;
+  animation-fill-mode: forwards;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.fly-in li:nth-of-type(2) {
+  transition-delay: calc(var(--delay) * 2);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.fly-in li:nth-of-type(3) {
+  transition-delay: calc(var(--delay) * 3);
+}
+.fly-in li:nth-of-type(4) {
+  transition-delay: calc(var(--delay) * 4);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.fly-in li:nth-of-type(5) {
+  transition-delay: calc(var(--delay) * 5);
 }
-button:hover {
-  border-color: #646cff;
+.fly-in li:nth-of-type(6) {
+  transition-delay: calc(var(--delay) * 6);
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.fly-in li:nth-of-type(7) {
+  transition-delay: calc(var(--delay) * 7);
+}
+.fly-in li:nth-of-type(8) {
+  transition-delay: calc(var(--delay) * 8);
+}
+.fly-in li:nth-of-type(9) {
+  transition-delay: calc(var(--delay) * 9);
+}
+.fly-in.hidden li {
+  opacity: 0;
+}
+.fly-in.hidden li:nth-of-type(1) {
+  transform: translate(-10px, -50px) scale(8.5) rotate(90deg);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.fly-in.hidden li:nth-of-type(2) {
+  transform: translate(-5px, -150px) scale(1.5);
+}
+
+.fly-in.hidden li:nth-of-type(3) {
+  transform: translate(-100px, 50px) scale(5.5);
+}
+.fly-in.hidden li:nth-of-type(4) {
+  transform: translate(100px, 150px) scale(1);
+}
+
+.fly-in.hidden li:nth-of-type(5) {
+  transform: translate(10px, -150px) scale(8.5) rotate(135deg);
+}
+
+.fly-in.hidden li:nth-of-type(6) {
+  transform: translate(100px, -150px) scale(1.5);
+}
+.fly-in.hidden li:nth-of-type(7) {
+  transform: translate(-100px, 150px) scale(1.5);
+}
+
+.fly-in.hidden li:nth-of-type(8) {
+  transform: translate(100px, 100px) scale(1.5);
+}
+
+.fly-in.hidden li:nth-of-type(9) {
+  transform: translate(-40px, 0px) scale(8.5) rotate(180deg);
+}
+
+@keyframes fadein {
+  from {
+    transform: rotate(-30deg) translate(75%, -45%);
+    opacity: 0;
+    transform-origin: 100% 100%;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  to {
+    transform: rotate(0deg) translate(75%, -45%);
+    transform-origin: 100% 100%;
+    opacity: 1;
   }
 }
