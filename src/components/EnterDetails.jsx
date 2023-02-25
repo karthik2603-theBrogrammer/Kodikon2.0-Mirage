@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CustomPage from './CustomPage';
 import Loader from './Loader';
+import axios from 'axios';
 
 const EnterDetails = () => {
   const [details, setDetails] = useState(null);
@@ -18,7 +19,7 @@ const EnterDetails = () => {
   //description
   const [description, setDescription] = useState(null);
   const handleSubmit = (e) => {
-    console.log('Button Clicked');
+    console.log(description);
     setGetting(true);
     const form = new FormData();
     form.append('response_as_dict', 'true');
@@ -49,16 +50,26 @@ const EnterDetails = () => {
       })
       .catch((err) => console.error(err));
     setProcessingDone(true);
+    setDetailsPresent(true);
+    // sendBackend();
+    // const text = axios
+    //   .post('http://localhost:4000/generate', {
+    //     data: 'Sleek, Stylish',
+    //   })
+    //   .then((res) => console.log(res.data))
+    //   .catch((err) => alert(err));
   };
   const handleChange = (e) => {
+    console.log(description);
     setDescription(e.target.value);
   };
+  //handle Backend
 
   return (
     <div className='h-[100vh]'>
       <div className='text-white'>Enter Your Product Details </div>
       <div className='flex flex-col'>
-        <div className='flex items-center justify-center w-full'>
+        <div className='flex flex-col items-center justify-center w-full'>
           <label
             htmlFor='dropzone-file'
             className='flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
@@ -97,10 +108,24 @@ const EnterDetails = () => {
               }}
             />
           </label>
-          <button onClick={handleSubmit} className='text-white'>
-            get
+          <input
+            type='text'
+            className='mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
+            // value='Enter input'
+            placeholder='Enter Text'
+            // disabled
+            onChange={(e) => handleChange(e)}
+          />
+          <button
+            onClick={() => {
+              handleSubmit();
+            }}
+            className='text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 m-5'
+          >
+            MAGIC
           </button>
         </div>
+
         <label className='text-white'>{imageSent?.name}</label>
         {/* <label className='text-white'>{imageDesc}</label> */}
       </div>
