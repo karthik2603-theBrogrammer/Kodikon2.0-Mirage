@@ -6,11 +6,12 @@ const openAi = require('openai');
 app.use(cors());
 app.use(express.json());
 const configuration = new openAi.Configuration({
-  apiKey: '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',
+  apiKey: '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',
 });
 const openai = new openAi.OpenAIApi(configuration);
 
 app.post('/generate', async (req, res) => {
+  // res.status(200).send({ bot: 'hey there' });
   try {
     const prompt = req.body.prompt;
     console.log(prompt);
