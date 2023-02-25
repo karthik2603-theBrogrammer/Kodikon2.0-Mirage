@@ -54,7 +54,7 @@ const EnterDetails = () => {
       .catch((err) => console.error(err));
     // sendBackend();
     const text = axios
-      .post('http://localhost:4000/generate', {
+      .post('https://17-team-mirage.vercel.app/generate', {
         prompt: prompt,
         keys: description,
       })
