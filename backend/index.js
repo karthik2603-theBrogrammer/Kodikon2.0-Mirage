@@ -9,7 +9,9 @@ const configuration = new openAi.Configuration({
   apiKey: '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',
 });
 const openai = new openAi.OpenAIApi(configuration);
-
+app.get('/', (req, res) => {
+  res.status(200).send('Welcome to backend');
+});
 app.post('/generate', async (req, res) => {
   // res.status(200).send({ bot: 'hey there' });
   try {
