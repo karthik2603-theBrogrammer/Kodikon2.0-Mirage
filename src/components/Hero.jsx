@@ -25,10 +25,7 @@ const Hero = () => {
       if (vantaEffect) vantaEffect.destroy();
     };
   }, [vantaEffect]);
-  //   useEffect(() => {
-  //     var ul = document.getElementById('list');
-  //     ul.className = ul.className.replace(/\hidden\b/g, 'fly-in');
-  //   }, []);
+
   return (
     <>
       <div ref={myRef} id='typewriter' className='w-[100vw] h-[100vh] relative'>
@@ -36,7 +33,6 @@ const Hero = () => {
           <h1 className='text-white ml-[10px]'>MIRAGE</h1>
         </div>
       </div>
-      <div>ienfiefiei</div>
     </>
   );
 };
