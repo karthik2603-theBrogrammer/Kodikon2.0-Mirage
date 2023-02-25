@@ -50,12 +50,13 @@ const EnterDetails = () => {
         setPrompt(response?.google?.items[0].label);
 
         setImageSent(null);
+        setGetting(false);
+        setDetailsPresent(true);
+        setProcessingDone(true);
       })
       .catch((err) => console.error(err));
     // sendBackend();
-    setGetting(false);
-    setDetailsPresent(true);
-    setProcessingDone(true);
+
     // const text = axios
     // .post('https://localhost:5000/generate', {
     //   prompt: prompt,
