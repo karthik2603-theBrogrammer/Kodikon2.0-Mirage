@@ -30,7 +30,7 @@ const Hero = () => {
     <>
       <div ref={myRef} id='typewriter' className='w-[100vw] h-[100vh] relative'>
         <div className='flex flex-col absolute top-[20px]'>
-          <h1 className='text-white ml-[10px]'>MIRAGE</h1>
+          <h1 className='text-white ml-[10px] text-[70px]'>MIRAGE</h1>
         </div>
       </div>
     </>

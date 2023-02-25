@@ -53,19 +53,22 @@ const EnterDetails = () => {
       })
       .catch((err) => console.error(err));
     // sendBackend();
-    const text = axios
-      .post('https://17-team-mirage.vercel.app/generate', {
-        prompt: prompt,
-        keys: description,
-      })
-      .then((res) => {
-        console.log(res.data.bot);
-        setGetting(false);
-        setDetailsPresent(true);
-        setProcessingDone(true);
-        setDescription(res?.data?.bot);
-      })
-      .catch((err) => alert(err));
+    setGetting(false);
+    setDetailsPresent(true);
+    setProcessingDone(true);
+    // const text = axios
+    // .post('https://localhost:5000/generate', {
+    //   prompt: prompt,
+    //   keys: description,
+    // })
+    // .then((res) => {
+    //   console.log(res.data.bot);
+    //   setGetting(false);
+    //   setDetailsPresent(true);
+    //   setProcessingDone(true);
+    //   setDescription(res?.data?.bot);
+    // })
+    // .catch((err) => alert(err));
   };
   const handleChange = (e) => {
     console.log(description);
