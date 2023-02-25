@@ -18,6 +18,9 @@ const EnterDetails = () => {
 
   //description
   const [description, setDescription] = useState(null);
+
+  //to backend
+  const [prompt, setPrompt] = useState(null);
   const handleSubmit = (e) => {
     console.log(description);
     setGetting(true);
@@ -44,20 +47,25 @@ const EnterDetails = () => {
       .then((response) => {
         console.log(response?.google?.items[0].label);
         setImageDesc(response?.google?.items[0].label);
-        setGetting(false);
+        setPrompt(response?.google?.items[0].label);
 
         setImageSent(null);
       })
       .catch((err) => console.error(err));
-    setProcessingDone(true);
-    setDetailsPresent(true);
     // sendBackend();
-    // const text = axios
-    //   .post('http://localhost:4000/generate', {
-    //     data: 'Sleek, Stylish',
-    //   })
-    //   .then((res) => console.log(res.data))
-    //   .catch((err) => alert(err));
+    const text = axios
+      .post('http://localhost:4000/generate', {
+        prompt: prompt,
+        keys: description,
+      })
+      .then((res) => {
+        console.log(res.data.bot);
+        setGetting(false);
+        setDetailsPresent(true);
+        setProcessingDone(true);
+        setDescription(res?.data?.bot);
+      })
+      .catch((err) => alert(err));
   };
   const handleChange = (e) => {
     console.log(description);
@@ -110,24 +118,21 @@ const EnterDetails = () => {
           </label>
           <input
             type='text'
-            className='mb-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            // value='Enter input'
+            className='m-6 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500'
             placeholder='Enter Text'
-            // disabled
             onChange={(e) => handleChange(e)}
           />
           <button
             onClick={() => {
               handleSubmit();
             }}
-            className='text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 m-5'
+            className='px-6 py-2 text-red-100 rounded bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900'
           >
             MAGIC
           </button>
         </div>
 
         <label className='text-white'>{imageSent?.name}</label>
-        {/* <label className='text-white'>{imageDesc}</label> */}
       </div>
       {getting && <Loader />}
       {detailsPresent && (

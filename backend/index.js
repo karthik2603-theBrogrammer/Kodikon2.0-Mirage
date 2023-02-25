@@ -1,22 +1,40 @@
 const express = require('express');
 const app = express();
-const deepai = require('deepai');
 const cors = require('cors');
+
+const openAi = require('openai');
 app.use(cors());
 app.use(express.json());
-
-deepai.setApiKey('quickstart-QUdJIGlzIGNvbWluZy4uLi4K');
-app.get('/', (req, res) => {
-  res.status(200).send('Welcome to the Express Backend');
+const configuration = new openAi.Configuration({
+  apiKey: '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',
 });
+const openai = new openAi.OpenAIApi(configuration);
+
 app.post('/generate', async (req, res) => {
-  var resp = await deepai.callStandardApi('text-generator', {
-    text: req.body.data,
-  });
-  console.log(resp);
-  res.status(200).send({ response: resp });
+  try {
+    const prompt = req.body.prompt;
+    console.log(prompt);
+    const keys = req.body.keys;
+    console.log(keys);
+    const response = await openai.createCompletion({
+      model: 'text-davinci-003',
+      prompt: `$Generate a product description for a product using keywords ${keys}`,
+      temperature: 0,
+      //higher temperature means the model will take more risks
+      max_tokens: 3000, //more and larger responses
+      top_p: 1,
+      frequency_penalty: 0.5,
+      //less likely to repeant the answer
+      presence_penalty: 0,
+    });
+    console.log(response.data.choices[0].text),
+      res.status(200).send({
+        bot: response.data.choices[0].text,
+      });
+  } catch (error) {
+    res.status(500).send({ error });
+  }
 });
-
 app.listen(4000, () => {
   console.log('Listening to port 4000');
 });
