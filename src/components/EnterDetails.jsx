@@ -58,18 +58,18 @@ const EnterDetails = () => {
     // sendBackend();
 
     // const text = axios
-    // .post('https://localhost:5000/generate', {
-    //   prompt: prompt,
-    //   keys: description,
-    // })
-    // .then((res) => {
-    //   console.log(res.data.bot);
-    //   setGetting(false);
-    //   setDetailsPresent(true);
-    //   setProcessingDone(true);
-    //   setDescription(res?.data?.bot);
-    // })
-    // .catch((err) => alert(err));
+    //   .post('https://localhost:4000/generate', {
+    //     prompt: prompt,
+    //     keys: description,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data.bot);
+    //     setGetting(false);
+    //     setDetailsPresent(true);
+    //     setProcessingDone(true);
+    //     setDescription(res?.data?.bot);
+    //   })
+    //   .catch((err) => alert(err));
   };
   const handleChange = (e) => {
     console.log(description);
