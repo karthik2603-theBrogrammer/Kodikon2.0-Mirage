@@ -1,1 +1,2 @@
-backend url = kodikon2-backend.vercel.app
+backend url = https://kodikon2-backend.vercel.app
+frontend url = https://kodikon2-0.vercel.app/
