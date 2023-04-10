@@ -7,4 +7,6 @@ The goal of the ONDC is to increase competition, reduce entry barriers, and prom
 
 ##Check out the Web App(Still in Development): https://kodikon2-0.vercel.app/
 
-Our Technology covers Automatic inventory management. In response to low stock, Demand management occurs, the Selling Price is dynamically increased and at the same time a Mail to restock the same product is sent.  
+##What Do We Do?
+We at Mirage cover Automatic inventory management. In response to low stock, Demand management occurs, the Selling Price is dynamically increased and at the same time a Mail to restock the same product is sent. 
+We also cover Automatic product description after detecting the product via object Detection.
