@@ -98,7 +98,7 @@ function ERP() {
     console.log(Date.now());
     const time = Date.now();
     axios
-      .post("http://localhost:4000/todatabase", {
+      .post(url + "/todatabase", {
         sending: count,
         time: time,
       })
@@ -133,7 +133,7 @@ function ERP() {
     setShowChart(false);
     setGettingChart(true);
     axios
-      .get("http://localhost:4000/chartdata")
+      .get(url + "/chartdata")
       .then((res) => {
         console.log(res?.data);
         setChartData(res?.data);
