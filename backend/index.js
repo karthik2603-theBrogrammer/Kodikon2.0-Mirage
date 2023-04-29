@@ -39,8 +39,11 @@ app.get("/", async (req, res) => {
     console.log("Accessed the database successfully");
     const mycollection = database.collection("kodikon-2");
     const doc = {
-      title: "Title Of my document",
-      content: "Hope this pdf upload gets over by today",
+      name: "Laptop1",
+      quantity: 0,
+      price: 100,
+      stock: 20,
+      time: Date.now(),
     };
     const result = await mycollection.insertOne(doc);
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
@@ -53,20 +56,21 @@ app.get("/", async (req, res) => {
 });
 
 // -----
-app.get('/cleardb', async (req,res) => {
+app.get("/cleardb", async (req, res) => {
   try {
     await client.connect();
     const database = client.db("kodikon_2");
     console.log("Deleted the database collection successfully");
     const mycollection = database.collection("kodikon-2");
-    mycollection.deleteMany()
-    res.status(200).json({status: 'Successfully Cleared the Database collection!'})
-
+    mycollection.deleteMany();
+    res
+      .status(200)
+      .json({ status: "Successfully Cleared the Database collection!" });
   } catch (error) {
-    console.log(error)
-    res.status(500).json({status: 'Error'})
+    console.log(error);
+    res.status(500).json({ status: "Error" });
   }
-})
+});
 // -----
 app.get("/make", async (req, res) => {
   try {
@@ -96,7 +100,6 @@ app.get("/make", async (req, res) => {
 app.post("/todatabase", async (req, res) => {
   try {
     //   console.log(req.body);
-    const boughtData = req.body;
     // projCollection.insertOne(
     //   {
     //     name: 'Laptop1',
@@ -110,43 +113,47 @@ app.post("/todatabase", async (req, res) => {
     //     console.log('First Added');
     //   }
     // );
-    projCollection.find({}).toArray((err, array) => {
-      let data = array[array.length - 1];
-      const latestStock = data.stock;
-      const latestQuantity = data.quantity;
-      // console.log(latestStock);
-      console.log(data);
-      const updatedStock = latestStock - boughtData?.sending;
-      // console.log(latestStock - boughtData?.sending);
-
-      let price_new = updatedStock <= 5 ? data?.price * 1.2 : data?.price;
-      if (updatedStock <= 5) {
-        // transporter.sendMail(mailOptions, function (err, info) {
-        //   if (err) {
-        //     console.log(err);
-        //   } else {
-        //     console.log(`Email Sent ${info.response}`);
-        //   }
-        // });
-        transporter.sendMail(mailOptions, function (err, info) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(`Email Sent ${info.response}`);
-          }
-        });
-      }
+    const { sending, time } = req.body;
+    await client.connect();
+    const database = client.db("kodikon_2");
+    console.log("Accessed the database successfully");
+    const mycollection = database.collection("kodikon-2");
+    var data = null;
+    mycollection.find({}).toArray(async (err, array) => {
+      let latestData = array[array.length - 1];
+      console.log(latestData)
+      data = latestData
     });
+    console.log(data);
+
+    const latestStock = data.stock;
+    console.log(data);
+    const latestQuantity = data.quantity;
+    const updatedStock = latestStock - sending;
+    // console.log(latestStock - boughtData?.sending);
+
+    const price_new = updatedStock <= 5 ? data?.price * 1.2 : data?.price;
     const updatedDB = await mycollection.insertOne({
       name: "Laptop1",
-      quantity: boughtData?.sending + latestQuantity,
+      quantity: sending + latestQuantity,
       price: price_new,
       stock: updatedStock,
       time: Date.now(),
     });
+    console.log('Added')
+    if (updatedStock <= 5) {
+      transporter.sendMail(mailOptions, function (err, info) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`Email Sent ${info.response}`);
+        }
+      });
+    }
+
     res.status(200).json({ status: "Updated To Database" });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 });
 app.get("/chartdata", async (req, res) => {

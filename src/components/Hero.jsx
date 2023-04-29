@@ -44,7 +44,7 @@ const Hero = () => {
             In This Project In accordance with ONDC, We have developed an interface that includes product detection, description generator as well as an ERP system, that generates an automated email at realtime.
           </p>
           <p className="text-7xl font-sans text-gray-500  dark:text-gray-100 md:w-[60%] p-[40px]">
-            ERP System
+            <Link to='/erp'>Go To ERP--</Link>
           </p>
         </div>
       </div>
