@@ -23,7 +23,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ERP() {
-  const url = "https://mirageinventorybackend.vercel.app/";
+  const url = "https://mirageinventorybackend.vercel.app";
   const resetDB = async () => {
     setShowChart(false)
     toast.info(`Clearing and Resetting DB... `, {
