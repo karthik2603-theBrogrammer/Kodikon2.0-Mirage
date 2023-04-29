@@ -27,7 +27,7 @@ function ERP() {
   // const url = "http://localhost:4000"
   const resetDB = async () => {
     setShowChart(false)
-    toast.info(`Clearing and Resetting DB... `, {
+    toast.info(`Clearing and Resetting DB.. `, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
