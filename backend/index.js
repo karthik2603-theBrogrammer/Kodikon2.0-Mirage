@@ -22,9 +22,6 @@ var transporter = nodemailer.createTransport({
 var mailOptions = {
   from: "pes1202100591@pesu.pes.edu",
   to: "karthiknamboori42@gmail.com",
-  // to: 'kganeshv12@gmail.com',
-  // to: 'ramyamardi2501@gmail.com',
-  // to: 'arry8668@gmail.com',
   subject: "Time To Restock!",
   text: "This Mail Is to inform You that your inventory is running short. Consider Restocking!",
 };
@@ -33,26 +30,7 @@ const uri =
   "mongodb+srv://karthik:karthik@cluster0.ev4b80v.mongodb.net/?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 app.get("/", async (req, res) => {
-  try {
-    await client.connect();
-    const database = client.db("kodikon_2");
-    console.log("Accessed the database successfully");
-    const mycollection = database.collection("kodikon-2");
-    const doc = {
-      name: "Laptop1",
-      quantity: 0,
-      price: 100,
-      stock: 20,
-      time: Date.now(),
-    };
-    const result = await mycollection.insertOne(doc);
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
-  } catch (e) {
-    console.log(e);
-  } finally {
-    // await client.close(); -- sometimes presence of this closes the db before work is done and hence error comes up
-    res.status(200).send("Done and closed the mongo db successfully");
-  }
+  res.json({ msg: "Hey There, WELCOME!", status: 200 });
 });
 
 // -----
@@ -82,14 +60,10 @@ app.get("/make", async (req, res) => {
       name: "Laptop1",
       quantity: 0,
       price: 100,
-      stock: 5,
+      stock: 18,
+      time: Date.now(),
     });
-    const laptop2 = await mycollection.insertOne({
-      name: "Laptop2",
-      quantity: 0,
-      price: 100,
-      stock: 5,
-    });
+
     console.log("Its good");
     res.status(200).json({ status: "Successful" });
   } catch (error) {
@@ -99,59 +73,39 @@ app.get("/make", async (req, res) => {
 });
 app.post("/todatabase", async (req, res) => {
   try {
-    //   console.log(req.body);
-    // projCollection.insertOne(
-    //   {
-    //     name: 'Laptop1',
-    //     quantity: 0,
-    //     price: 100,
-    //     stock: 20,
-    //     time: Date.now(),
-    //   },
-    //   (err, msg) => {
-    //     if (err) throw err;
-    //     console.log('First Added');
-    //   }
-    // );
     const { sending, time } = req.body;
     await client.connect();
     const database = client.db("kodikon_2");
     console.log("Accessed the database successfully");
     const mycollection = database.collection("kodikon-2");
-    var data = null;
     mycollection.find({}).toArray(async (err, array) => {
-      let latestData = array[array.length - 1];
-      console.log(latestData)
-      data = latestData
-    });
-    console.log(data);
+      let data = array[array.length - 1];
+      const latestStock = data.stock;
+      const latestQuantity = data.quantity;
+      const updatedStock = latestStock - sending;
 
-    const latestStock = data.stock;
-    console.log(data);
-    const latestQuantity = data.quantity;
-    const updatedStock = latestStock - sending;
-    // console.log(latestStock - boughtData?.sending);
-
-    const price_new = updatedStock <= 5 ? data?.price * 1.2 : data?.price;
-    const updatedDB = await mycollection.insertOne({
-      name: "Laptop1",
-      quantity: sending + latestQuantity,
-      price: price_new,
-      stock: updatedStock,
-      time: Date.now(),
-    });
-    console.log('Added')
-    if (updatedStock <= 5) {
-      transporter.sendMail(mailOptions, function (err, info) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Email Sent ${info.response}`);
-        }
+      const price_new = updatedStock <= 5 ? data?.price * 1.2 : data?.price;
+      const updatedDB = await mycollection.insertOne({
+        name: "Laptop1",
+        quantity: sending + latestQuantity,
+        price: price_new,
+        stock: updatedStock,
+        time: Date.now(),
       });
-    }
-
-    res.status(200).json({ status: "Updated To Database" });
+      console.log(updatedDB?.insertedCount, updatedDB?.insertedId);
+      if (updatedStock <= 5) {
+        transporter.sendMail(mailOptions, function (err, info) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(`Email Sent ${info.response}`);
+          }
+        });
+      }
+    });
+    res
+      .status(200)
+      .json({ status: `Updated To Database in ${sending} number` });
   } catch (error) {
     console.log(error);
   }

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Loader = () => {
   return (
-    <div className='spinner-box md:pr-[130px] pr-[30px]'>
+    <div className='spinner-box h-[40vh] flex items-center justify-center mt-9 self-center pl-9 md:pl-[140px]'>
       <div className='configure-border-1 self-center '>
         <div className='configure-core self-center'></div>
       </div>
